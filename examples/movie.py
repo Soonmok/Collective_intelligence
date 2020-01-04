@@ -1,12 +1,12 @@
+import random
+
 import pandas as pd
 
 from modules.similarity import uclidian_sim, pearson_sim, jaccard_sim
+from modules.utils import total_common_movies
 
-if __name__=="__main__":
-    dataset = pd.read_csv("../datasets/ml-latest-small/ratings.csv")
-    user1 = 1
-    user2 = 100
 
+def calculate_sim(dataset, user1, user2):
     user1_ratings = dataset[dataset['userId'] == user1]
     user2_ratings = dataset[dataset['userId'] == user2]
 
@@ -29,8 +29,10 @@ if __name__=="__main__":
     user2_liked_movies = user2_binary_ratings[user2_binary_ratings['rating'] == 1]['movieId']
 
     jac_sim = jaccard_sim(set(user1_liked_movies), set(user2_liked_movies))
+    print(f"uclidian sim: {ucl_sim} pearson sim: {pear_sim} jaccard sim: {jac_sim}")
 
 
-
-
+if __name__ == "__main__":
+    dataset = pd.read_csv("../datasets/ml-latest-small/ratings.csv")
+    calculate_sim(dataset, 2, 25)
 
